@@ -14,7 +14,7 @@ public class ProductItemService {
     private ProductItemPersistance productItemPersistance;
     private List<ProductItem> productItems = new ArrayList<ProductItem>();
 
-    public ProductItemService(ProductItemPersistance productItemService) {
+    public ProductItemService(ProductItemPersistance productItemPersistance) {
         this.productItemPersistance = productItemPersistance;
     }
 

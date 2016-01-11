@@ -13,15 +13,10 @@ import java.util.List;
  */
 public class ShoppingListService {
     private ShoppingListPersistance shoppingListPersistance;
-    private ProductItemService productItemService;
     private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
 
     public ShoppingListService(ShoppingListPersistance shoppingListPersistance) {
         this.shoppingListPersistance = shoppingListPersistance;
-    }
-
-    public void setProductItemService(ProductItemService productItemService) {
-        this.productItemService = productItemService;
     }
 
     public ShoppingList createShoppingList(String listName) {

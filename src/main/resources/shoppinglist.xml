@@ -6,11 +6,15 @@
 
     <bean id="shoppinglist-service" class="shoppinglist.service.ShoppingListService">
         <constructor-arg ref="shoppinglist-persistance"/>
-        <property name="productItemService" ref="productItem-service"/>
     </bean>
 
     <bean id="productItem-service" class="shoppinglist.service.ProductItemService">
         <constructor-arg ref="productItem-persistance"/>
+    </bean>
+
+    <bean id="shoppingListController" class="shoppinglist.gui.ShoppingListController">
+        <constructor-arg ref="shoppinglist-service"/>
+        <property name="productItemService" ref="productItem-service"/>
     </bean>
 
     <bean id="shoppinglist-persistance"
@@ -18,5 +22,6 @@
 
     <bean id="productItem-persistance"
           class="shoppinglist.persistence.productitem.ProductItemHibernatePersistence"/>
+
 
 </beans>

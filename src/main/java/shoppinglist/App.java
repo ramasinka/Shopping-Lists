@@ -19,8 +19,8 @@ public class App
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("shoppinglist.xml");
 
-        ShoppingListService shoppingListService = (ShoppingListService) context.getBean("shoppinglist-service");
+        ShoppingListController shoppingListController = (ShoppingListController) context.getBean("shoppingListController");
 
-        new GUI(new ShoppingListController(shoppingListService));
+        new GUI(shoppingListController);
     }
 }
