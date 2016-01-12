@@ -2,6 +2,7 @@ package shoppinglist.persistence.shoppinglist;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shoppinglist.data.ShoppingList;
 import shoppinglist.data.Status;
 import shoppinglist.exceptions.ShoppingListNotFoundException;
@@ -19,8 +20,6 @@ import java.util.List;
 public class ShoppingListHibernatePersistence implements ShoppingListPersistance {
     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Eclipselink_JPA");
     EntityManager entitymanager = emfactory.createEntityManager();
-    @Autowired
-    ShoppingListService shoppingListService;
 
     @Override
     public ShoppingList saveShoppingList(ShoppingList shoppingList) {

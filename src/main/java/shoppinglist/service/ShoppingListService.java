@@ -1,6 +1,7 @@
 package shoppinglist.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import shoppinglist.data.ProductItem;
 import shoppinglist.data.ShoppingList;
 import shoppinglist.persistence.shoppinglist.ShoppingListPersistance;
@@ -12,9 +13,10 @@ import java.util.List;
  * Created by Ramasinka on 2015.08.17.
  */
 public class ShoppingListService {
+    @Autowired
     private ShoppingListPersistance shoppingListPersistance;
     private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-
+    @Autowired
     public ShoppingListService(ShoppingListPersistance shoppingListPersistance) {
         this.shoppingListPersistance = shoppingListPersistance;
     }

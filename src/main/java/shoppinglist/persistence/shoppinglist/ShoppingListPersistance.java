@@ -2,6 +2,8 @@ package shoppinglist.persistence.shoppinglist;
 
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shoppinglist.data.ShoppingList;
 import shoppinglist.exceptions.ShoppingListNotFoundException;
 

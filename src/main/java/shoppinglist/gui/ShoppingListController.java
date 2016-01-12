@@ -1,5 +1,6 @@
 package shoppinglist.gui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import shoppinglist.data.ProductItem;
 import shoppinglist.data.ShoppingList;
 import shoppinglist.data.Status;
@@ -16,13 +17,16 @@ public class ShoppingListController {
     private ShoppingListService shoppingListService;
     private ProductItemService productItemService;
 
+    @Autowired
     public ShoppingListController(ShoppingListService shoppingListService) {
         this.shoppingListService = shoppingListService;
     }
 
-    public void setProductItemService(ProductItemService productItemService){
+    @Autowired
+    public void setProductItemService(ProductItemService productItemService) {
         this.productItemService = productItemService;
     }
+
     public Object[][] getAllShoppingLists() {
         List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
         return entriesToArray(shoppingLists);
@@ -45,9 +49,15 @@ public class ShoppingListController {
     public ProductItem createProductItem(ProductItem productItem) {
         return productItemService.createProductItem(productItem);
     }
-/*    public List<ProductItem> getAllProductItems(){
-        return productItemService.getProductItems();
-    }*/
+
+    public ShoppingList getShoppingListById(int id) {
+        return shoppingListService.getShoppingListById(id);
+    }
+
+    public List<ProductItem> getAllProductItems(int id) {
+        ShoppingList shoppingList = shoppingListService.getShoppingListById(id);
+        return shoppingList.getProductItemList();
+    }
 
     private Object[][] entriesToArray(List<ShoppingList> shoppingLists) {
         Object[][] entriesArray = new Object[shoppingLists.size()][];

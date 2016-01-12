@@ -11,6 +11,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 /**
  * Created by Romcikas on 1/10/2016.
@@ -24,13 +25,14 @@ public class GUI extends JFrame implements ActionListener {
     public Object[] columns;
     public DefaultTableModel defaultTableModel;
     private ShoppingListController shoppingListController;
+    private java.util.List<ProductItem> productsList = new ArrayList<ProductItem>();
 
     public GUI(final ShoppingListController db) {
 
         super();
         this.shoppingListController = db;
 
-        columns = new Object[]{"ShoppingList ID", "ShoppingList Name", "Guest Last Name", "Room Status"};
+        columns = new Object[]{"ShoppingList ID", "ShoppingList Name"};
         defaultTableModel = new DefaultTableModel(shoppingListController.getAllShoppingLists(), columns) {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -68,11 +70,7 @@ public class GUI extends JFrame implements ActionListener {
         inputPanel.add(shoppingListName);
         inputPanel.add(createShoppingListButton);
         inputPanel.add(deleteShoppingListButton);
-
-
         inputPanel.add(itemsButton);
-
-
         // set the input panel to the bottom and the error panel to the top
         this.add(inputPanel, BorderLayout.SOUTH);
 
@@ -109,6 +107,9 @@ public class GUI extends JFrame implements ActionListener {
             defaultTableModel.addRow(entry);
         }
     }
+    public void refreshShoppingListItems(){
+
+    }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == createShoppingListButton) {
@@ -126,24 +127,27 @@ public class GUI extends JFrame implements ActionListener {
                 shoppingListController.deleteShoppingList((int) table.getModel().getValueAt(selectedRow, 0));
                 refreshRoomTable();
             }
-        } else if (e.getSource() == itemsButton) {
-            int selectedRow = table.getSelectedRow();
-            if (selectedRow < 0) {
-                JOptionPane.showMessageDialog(this, "Please, select a row to checkOut guest.", "CheckOut",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                // shoppingListController.getAllProductItems();
-                refreshRoomTable();
-            }
         } else if (e.getSource() == createItemButton) {
             int selectedRow = table.getSelectedRow();
             if (selectedRow < 0) {
                 JOptionPane.showMessageDialog(this, "Please, select a row to checkOut guest.", "CheckOut",
                         JOptionPane.INFORMATION_MESSAGE);
-            }else {
+            } else {
                 ProductItem productItem = new ProductItem();
-                productItem.setProductName("Test");
+                productItem.setProductName(productitemName.getText());
+                productItem.setShoppingList(shoppingListController.getShoppingListById((int) table.getModel().getValueAt(selectedRow, 0)));
                 shoppingListController.createProductItem(productItem);
+                productsList.add(productItem);
+            }
+        } else if (e.getSource() == itemsButton) {
+            int selectedRow = table.getSelectedRow();
+            productsList = shoppingListController.getAllProductItems((int) table.getModel().getValueAt(selectedRow, 0));
+            textArea.setText("");
+            for (ProductItem item : productsList) {
+                textArea.append(item.toString());
+                textArea.append("\n");
+                textArea.revalidate();
+                refreshRoomTable();
             }
         }
     }
@@ -155,6 +159,4 @@ public class GUI extends JFrame implements ActionListener {
             column.setPreferredWidth(widths[i]);
         }
     }
-
-
 }
